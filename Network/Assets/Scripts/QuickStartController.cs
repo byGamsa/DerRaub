@@ -13,10 +13,22 @@ public class QuickStartController : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.AddCallbackTarget(this);
     }
-
+    
     public override void OnDisable() 
     {
         PhotonNetwork.RemoveCallbackTarget(this);    
+    }
+    public override void OnJoinedRoom()
+    {
+        print("Joined Room");
+        StartGame();
+    }
+    private void StartGame()
+    {
+        if(PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel(multiplayerSceneIndex);
+        }
     }
     void Start()
     {

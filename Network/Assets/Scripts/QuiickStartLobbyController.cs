@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
 public class QuiickStartLobbyController : MonoBehaviourPunCallbacks
 {
@@ -33,7 +34,20 @@ public class QuiickStartLobbyController : MonoBehaviourPunCallbacks
     public void OnJoinRadnomFailed(short returnCode, string message)
     {
         print("Failed to join a room, we are creating on now");
-        FindObjectOfType<CreateRoomMenu>().OnClick_CreateRoom();
+    }
+
+    public void CreateRandomRoom()
+    {
+        int roomNumer = Random.Range(0, 500);
+        RoomOptions roomOptions = new RoomOptions() {IsVisible = true, IsOpen = false, MaxPlayers = (byte)roomNumer};
+        PhotonNetwork.CreateRoom("Room " + roomNumer, roomOptions);
+
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        print("Failed to create room...Trying again");
+        CreateRandomRoom();
     }
 
     public override void OnDisable() 
