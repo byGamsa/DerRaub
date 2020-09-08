@@ -24,6 +24,10 @@ public class CreateRoomMenu : MonoBehaviourPunCallbacks
     public override void OnCreatedRoom()
     {
         Debug.Log("Created Room successfully!", this);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("SampleScene");
+        }
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)

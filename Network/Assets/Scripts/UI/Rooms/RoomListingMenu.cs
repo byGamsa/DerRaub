@@ -13,6 +13,11 @@ public class RoomListingMenu : MonoBehaviourPunCallbacks
 
     private List<RoomListing> _listings = new List<RoomListing>();
 
+    public override void OnJoinedRoom()
+    {
+        base.OnJoinedRoom();
+    }
+
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         foreach (RoomInfo info in roomList)

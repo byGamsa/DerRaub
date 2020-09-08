@@ -18,9 +18,11 @@ public class Connect : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         Debug.Log("Connected to Server!");
         Debug.Log("Player: " + PhotonNetwork.LocalPlayer.NickName);
 
+        PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.JoinLobby();
     }
 
