@@ -670,7 +670,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfabb18edceb9b346888f2bdc6dafc62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  multiplayerSceneName: SampleScene
+  multiplayerSceneName: QuickMatchScene
 --- !u!1 &548138885
 GameObject:
   m_ObjectHideFlags: 0

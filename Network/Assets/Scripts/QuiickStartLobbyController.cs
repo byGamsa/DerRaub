@@ -37,10 +37,22 @@ public class QuiickStartLobbyController : MonoBehaviourPunCallbacks
 
     public void CreateRandomRoom()
     {
+
+        if (!PhotonNetwork.IsConnected)
+        {
+            return;
+        }
         int roomNumber = Random.Range(0, 500);
         RoomOptions roomOptions = new RoomOptions() {IsVisible = true, IsOpen = false, MaxPlayers = (byte)roomNumber};
         PhotonNetwork.CreateRoom("Room " + roomNumber, roomOptions);
 
+    }
+    public override void OnCreatedRoom()
+    {
+        if(PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("QuickMatchScene");   
+        }
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)

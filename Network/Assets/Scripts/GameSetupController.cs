@@ -21,6 +21,6 @@ public class GameSetupController : MonoBehaviour
 
     private void CreatePlayer()
     {
-        PhotonNetwork.Instantiate(Path.Combine("Player"), Vector3.zero, Quaternion.identity);   
+        PhotonNetwork.Instantiate(Path.Combine("FPSController"), Vector3.zero, Quaternion.identity);   
     }
 }

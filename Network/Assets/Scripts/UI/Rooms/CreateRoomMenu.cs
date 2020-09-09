@@ -35,4 +35,5 @@ public class CreateRoomMenu : MonoBehaviourPunCallbacks
     {
         Debug.Log("Room creation failed: " + message, this);
     }
+    
 }
