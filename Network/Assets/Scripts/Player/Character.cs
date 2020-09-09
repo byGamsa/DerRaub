@@ -8,6 +8,7 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0);
+        int randomX = Random.Range(-8, +8);
+        PhotonNetwork.Instantiate("Player", new Vector3(randomX, 0, 0), Quaternion.identity, 0);
     }
 }
