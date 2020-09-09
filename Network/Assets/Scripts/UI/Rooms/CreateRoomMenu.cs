@@ -27,6 +27,7 @@ public class CreateRoomMenu : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LoadLevel("SampleScene");
+            
         }
     }
 
