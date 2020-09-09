@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using System.IO;
 
 public class QuiickStartLobbyController : MonoBehaviourPunCallbacks
 {
@@ -18,10 +19,7 @@ public class QuiickStartLobbyController : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
         quickStartButton.SetActive(true);
     }
-    public override void OnEnable()
-    {
-        
-    }
+
     
     public void QuickStart()
     {
@@ -29,18 +27,19 @@ public class QuiickStartLobbyController : MonoBehaviourPunCallbacks
         quickStartButton.SetActive(false);
         PhotonNetwork.JoinRandomRoom();
         print("Joined room");
+        QuickStart();
     }
-
-    public void OnJoinRadnomFailed(short returnCode, string message)
+    public override void OnJoinRandomFailed(short returnCode, string message)
     {
         print("Failed to join a room, we are creating on now");
+        CreateRandomRoom();
     }
 
     public void CreateRandomRoom()
     {
-        int roomNumer = Random.Range(0, 500);
-        RoomOptions roomOptions = new RoomOptions() {IsVisible = true, IsOpen = false, MaxPlayers = (byte)roomNumer};
-        PhotonNetwork.CreateRoom("Room " + roomNumer, roomOptions);
+        int roomNumber = Random.Range(0, 500);
+        RoomOptions roomOptions = new RoomOptions() {IsVisible = true, IsOpen = false, MaxPlayers = (byte)roomNumber};
+        PhotonNetwork.CreateRoom("Room " + roomNumber, roomOptions);
 
     }
 
@@ -50,19 +49,11 @@ public class QuiickStartLobbyController : MonoBehaviourPunCallbacks
         CreateRandomRoom();
     }
 
-    public override void OnDisable() 
+    public void QuickCancel()
     {
-
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
+        PhotonNetwork.LeaveLobby();
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+  
 }

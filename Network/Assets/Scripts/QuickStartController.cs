@@ -6,7 +6,7 @@ using UnityEngine;
 public class QuickStartController : MonoBehaviourPunCallbacks
 {
     [SerializeField]
-    private int multiplayerSceneIndex;
+    private string multiplayerSceneName;
 
 
     public override void OnEnable() 
@@ -27,7 +27,7 @@ public class QuickStartController : MonoBehaviourPunCallbacks
     {
         if(PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel(multiplayerSceneIndex);
+            PhotonNetwork.LoadLevel(multiplayerSceneName);
         }
     }
     void Start()
