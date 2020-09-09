@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseLook : MonoBehaviour
+public class MouseLook : MonoBehaviourPun
 {
     public float mouseSensitivity = 100f;
 
@@ -19,15 +20,18 @@ public class MouseLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        if (photonView.IsMine)
+        {
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f); //Camera roll not trough/behind the player
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f); //Camera roll not trough/behind the player
 
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f); //look up and down
+            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f); //look up and down
 
-        playerBody.Rotate(Vector3.up * mouseX); //look left and right
-
+            playerBody.Rotate(Vector3.up * mouseX); //look left and right
+        }
+        
     }
 }

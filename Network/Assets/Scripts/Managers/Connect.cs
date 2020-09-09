@@ -22,8 +22,11 @@ public class Connect : MonoBehaviourPunCallbacks
         Debug.Log("Connected to Server!");
         Debug.Log("Player: " + PhotonNetwork.LocalPlayer.NickName);
 
-        PhotonNetwork.AutomaticallySyncScene = true;
-        PhotonNetwork.JoinLobby();
+        if (!PhotonNetwork.InLobby)
+        {
+            PhotonNetwork.AutomaticallySyncScene = true;
+            PhotonNetwork.JoinLobby();
+        }
     }
 
     public override void OnDisconnected(DisconnectCause cause)

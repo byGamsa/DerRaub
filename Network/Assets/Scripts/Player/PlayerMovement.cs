@@ -7,10 +7,9 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
-using System.Text;
 using Photon.Pun;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviourPun
 {
 
     public CharacterController controller;
@@ -36,45 +35,48 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-
-        if(isGrounded && velocity.y < 0)
+        if (photonView.IsMine)
         {
-            velocity.y = -2f;
-        }
+            isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-
-        Vector3 move = transform.right * x + transform.forward * z;
-
-
-        if(Input.GetButtonDown("Jump") && isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
-
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            controller.Move(move * sprintSpeed * Time.deltaTime);
-        }
-        else
-        {
-            if (Input.GetKey(KeyCode.C))
+            if (isGrounded && velocity.y < 0)
             {
-                controller.Move(move * crouchSpeed * Time.deltaTime);
+                velocity.y = -2f;
+            }
+
+            float x = Input.GetAxis("Horizontal");
+            float z = Input.GetAxis("Vertical");
+
+            Vector3 move = transform.right * x + transform.forward * z;
+
+
+            if (Input.GetButtonDown("Jump") && isGrounded)
+            {
+                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            }
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                controller.Move(move * sprintSpeed * Time.deltaTime);
             }
             else
             {
-                controller.Move(move * walkSpeed * Time.deltaTime);
+                if (Input.GetKey(KeyCode.C))
+                {
+                    controller.Move(move * crouchSpeed * Time.deltaTime);
+                }
+                else
+                {
+                    controller.Move(move * walkSpeed * Time.deltaTime);
+                }
+
             }
-            
+
+            velocity.y += gravity * Time.deltaTime;
+
+            controller.Move(velocity * Time.deltaTime);
+
         }
-        
-
-        velocity.y += gravity * Time.deltaTime;
-
-        controller.Move(velocity * Time.deltaTime);     
 
     }
 }
